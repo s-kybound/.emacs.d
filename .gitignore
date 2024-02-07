@@ -64,6 +64,8 @@ smex-items
 /backups/
 /savefile/
 /irony/
+/desktops/
+/eln-cache/
 
 # untracked files
 places

@@ -567,8 +567,7 @@ If you experience stuttering, increase this.")
   (ivy-posframe-min-height 10)
   :config
   (when (member "Iosevka Aile" (font-family-list))
-    (setq ivy-posframe-parameters
-          '((font . "Iosevka Aile"))))
+    (setq ivy-posframe-parameters '((font . "Iosevka Aile"))))
   (setq ivy-posframe-display-functions-alist
         '((complete-symbol . ivy-posframe-display-at-point)
           (swiper . ivy-display-function-fallback)
@@ -1203,7 +1202,7 @@ If you experience stuttering, increase this.")
   :bind ("<f8>" . ispell-word) ; easy spell check
   :custom
   (ispell-program-name "hunspell") ; require Hunspell
-  (ispell-dictionary "en_US,en_GB,bn_BD")
+  (ispell-dictionary "en_US,en_GB")
   (ispell-personal-dictionary "~/.emacs.d/.hunspell_personal")
   :config
   ;; Configure `LANG`, otherwise ispell.el cannot find a 'default
@@ -1377,10 +1376,10 @@ If you experience stuttering, increase this.")
 ;;________________________________________________________________
 ;;		Identity Who I Am ?
 ;;________________________________________________________________
-(setq user-full-name       "Likhon Barai"
-      user-login-name      "likhon"
-      user-real-login-name "raxit"
-      user-mail-address    "likhonhere007@gmail.com")
+(setq user-full-name       "Kyriel Mortel Abad"
+      user-login-name      "skybound"
+      user-real-login-name "skybound"
+      user-mail-address    "kyriel@u.nus.edu")
 
 ;;;; Encoding
 ;; default to utf-8 for all the things
@@ -1528,8 +1527,7 @@ If you experience stuttering, increase this.")
   (set-face-attribute 'font-lock-comment-face nil :family "Iosevka Aile Oblique" :height 106) ; :foreground "#5B6268"
   (set-face-attribute 'font-lock-function-name-face nil :family "Iosevka Aile" :height 102 :slant 'italic :weight 'regular) ; 'medium
   ;; (set-face-attribute 'font-lock-variable-name-face nil :foreground "#dcaeea" :weight 'bold)
-  (set-face-attribute 'font-lock-keyword-face nil :weight 'bold)
-  )
+  (set-face-attribute 'font-lock-keyword-face nil :weight 'bold))
 
 ;; Set up emoji rendering
 ;; Default Windows emoji font
@@ -1598,6 +1596,10 @@ If you experience stuttering, increase this.")
       (message "%s" file)
       (delete-file file))))
 
+;;;; get stuff from shell
+(when (memq window-system '(mac ns x))
+  (exec-path-from-shell-initialize))
+
 ;;; Finish up
 (provide 'init)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
@@ -1607,6 +1609,7 @@ If you experience stuttering, increase this.")
 ;; End:
 
 ;;; enable some major-mode
+(global-tree-sitter-mode)
 (put 'scroll-left 'disabled nil)
 (put 'downcase-region 'disabled nil)
 (put 'narrow-to-region 'disabled nil)
