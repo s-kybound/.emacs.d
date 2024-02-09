@@ -1,12 +1,7 @@
 ;;; init.el --- Initialization file -*- lexical-binding: t; -*-
 ;;
 ;; Filename: init.el
-;; Description: Initialize Zmacs (obviously Emacs :smile:)
-;; Author: Likhon Sapiens
-;; Copyright © 2022 Likhon Sapiens
-;; Created: Thu Oct 29 10:15:28 2022 (-0400)
-;; Version: 0.1
-;; URL: https://github.com/Likhon-baRoy/.emacs.d
+;; URL: https://github.com/s-kybound/.emacs.d
 ;; Keywords: Zmacs .emacs.d init
 ;; Compatibility: emacs-version >= 28.2
 ;;
@@ -37,7 +32,8 @@
 
 
 ;; BetterGC
-(defvar better-gc-cons-threshold 134217728 ; 128mb
+
+(defvar better-gc-cons-threshold (* 1024 1024 100) ; 100 MiB
   "If you experience freezing, decrease this.
 If you experience stuttering, increase this.")
 
@@ -127,6 +123,44 @@ If you experience stuttering, increase this.")
   (use-package-always-defer nil) ; :defer t by default
   (use-package-expand-minimally t)
   (use-package-enable-imenu-support t))
+
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
+;; Kyriel's changes
+;; enforce org-mode on a default buffer
+(setq-default major-mode 'org-mode)
+
+;; enable synchronization between lsp and treemacs
+(lsp-treemacs-sync-mode 1)
+
+;; enable treemacs on startup
+(add-hook 'emacs-startup-hook 'treemacs)
+
+;; auto lsp-mode on every prog-mode
+(add-hook 'prog-mode-hook 'lsp-deferred)
+;; Less chatty for unsupported modes
+(setq lsp-warn-no-matched-clients nil)
+
+;; treemacs
+(defun transform-directory-name (dir)
+  "Given a directory of 'a', convert it to '> a'"
+  (concat "> " a))
+
+(use-package treemacs
+  :ensure t
+  :defer t
+  :config
+  (progn
+    (setq
+     ;;treemacs-no-png-images t
+     ;;treemacs-directory-name-transformer #'identity
+     )))
+
+;; emojis for treemacs
+(use-package treemacs-nerd-icons
+  :after treemacs nerd-icons
+  :config
+  (treemacs-load-theme "nerd-icons"))
+;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; ─────────────────── Additional Packages and Configurations ──────────────────
 ;; Add `:doc' support for use-package so that we can use it like what a doc-strings is for
@@ -679,25 +713,6 @@ If you experience stuttering, increase this.")
 ;;;;; hl-numbers
 (use-package highlight-numbers
   :hook (prog-mode . highlight-numbers-mode))
-
-;;;;; beacon
-(use-package beacon
-  :commands beacon-mode
-  :init (beacon-mode t)
-  :bind ("C-S-l" . 'beacon-blink)
-  :config
-  (setq
-   beacon-blink-when-window-changes t  ; only flash on window/buffer changes...
-   beacon-blink-when-window-scrolls nil
-   beacon-blink-when-point-moves nil
-   beacon-dont-blink-commands nil
-   beacon-blink-when-focused t
-   beacon-blink-duration .5
-   beacon-blink-delay .5
-   beacon-push-mark 1
-   beacon-color "#50D050"
-   beacon-size 20)
-  :delight)
 
 ;;;;; emojify
 (use-package emojify
