@@ -1,7 +1,7 @@
-#+TITLE:  Likhon's GNU Emacs Configuration
-#+AUTHOR: Likhon Barai
-#+EMAIL:  likhonhere007@gmail.com
-#+DATE:   2022 Nov 19
+#+TITLE:  Kyriel's GNU Emacs Configuration
+#+AUTHOR: Kyriel Abad
+#+EMAIL:  kyriel@u.nus.edu
+#+DATE:   2024 Feb 16
 #+LANGUAGE: en
 #+STARTUP: overview
 #+TAGS:   emacs
@@ -23,7 +23,7 @@
 An infinite number of monkeys typing into GNU Emacs would never make a good program.\\
 ——— Linus Torvalds
 #+end_quote
-
+Many thanks to Likhon who paved the way to make this config.
 * Table of Contents                                                     :TOC:
 - [[#about][About]]
   - [[#about-readme][About README]]
@@ -50,6 +50,7 @@ An infinite number of monkeys typing into GNU Emacs would never make a good prog
 - [[#scroll-license][:scroll: License]]
 
 * About
+
 Emacs changes how you *think* about programming.
 
 Emacs is *totally introspectable*. You can always find out /what code runs when I press this button?/.
