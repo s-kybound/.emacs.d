@@ -163,9 +163,30 @@ If you experience stuttering, increase this.")
   :config
   (progn
     (setq
-     ;;treemacs-no-png-images t
+     treemacs-no-png-images t
      ;;treemacs-directory-name-transformer #'identity
      )))
+
+(use-package treemacs-projectile
+  :after (treemacs projectile)
+  :ensure t)
+
+(use-package treemacs-magit
+  :after (treemacs magit)
+  :ensure t)
+
+(with-eval-after-load 'treemacs
+  ;; Customize directory face to be bold
+  (custom-set-faces
+   '(treemacs-file-face ((t (:weight ultra-light)))))
+
+  (custom-set-faces
+   '(treemacs-directory-face ((t (:weight ultra-bold)))))
+
+  ;; Customize project/root face to be larger and bold
+  (custom-set-faces
+   '(treemacs-root-face ((t (:height 1.2 :weight ultra-bold))))))
+
 
 ;; emojis for treemacs
 (use-package treemacs-nerd-icons
@@ -1531,17 +1552,17 @@ If you experience stuttering, increase this.")
 (setq font-lock-maximum-decoration t) ; We have CPU to spare; highlight all syntax categories.
 
 ;; Set the font face
-(cond ((aorst/font-installed-p "JetBrainsMono")
-       (set-face-attribute 'default nil :font (font-spec :family "JetBrainsMono" :size 10.0 :weight 'regular))
-       (set-face-attribute 'fixed-pitch nil :font (font-spec :family "JetBrainsMono" :size 10.0 :weight 'regular)))
+(cond ((aorst/font-installed-p "Iosevka")
+       (set-face-attribute 'default nil :font (font-spec :family "Iosevka" :size 14.0 :weight 'regular))
+       (set-face-attribute 'fixed-pitch nil :font (font-spec :family "Iosevka" :size 14.0 :weight 'regular)))
       ((aorst/font-installed-p "Source Code Pro")
-       (set-face-attribute 'default nil :font "Source Code Pro 10")))
+       (set-face-attribute 'default nil :font "Source Code Pro 14")))
 
 ;; For variable pitched fonts Iosevka Aile is used if available.
 (when (aorst/font-installed-p "Iosevka Aile")
-  (set-face-attribute 'variable-pitch nil :font (font-spec :family "Iosevka Aile" :size 10.5 :weight 'regular))
-  (set-face-attribute 'font-lock-comment-face nil :family "Iosevka Aile Oblique" :height 106) ; :foreground "#5B6268"
-  (set-face-attribute 'font-lock-function-name-face nil :family "Iosevka Aile" :height 102 :slant 'italic :weight 'regular) ; 'medium
+  (set-face-attribute 'variable-pitch nil :font (font-spec :family "Iosevka Aile" :size 14.0 :weight 'regular))
+  (set-face-attribute 'font-lock-comment-face nil :family "Iosevka Aile Oblique" :height 140) ; :foreground "#5B6268"
+  (set-face-attribute 'font-lock-function-name-face nil :family "Iosevka Aile" :height 140 :slant 'italic :weight 'regular) ; 'medium
   ;; (set-face-attribute 'font-lock-variable-name-face nil :foreground "#dcaeea" :weight 'bold)
   (set-face-attribute 'font-lock-keyword-face nil :weight 'bold))
 
