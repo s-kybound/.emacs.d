@@ -918,7 +918,7 @@ If you experience stuttering, increase this.")
   (dashboard-set-file-icons t)
   (dashboard-set-heading-icons t)
   (dashboard-image-banner-max-height 250)
-  (dashboard-banner-logo-title "[ E M A C S ]")
+  (dashboard-banner-logo-title "P U R I T Y")
   (dashboard-startup-banner (concat user-emacs-directory "etc/banners/blackhole.png"))
   :config
   (dashboard-setup-startup-hook)
@@ -928,36 +928,10 @@ If you experience stuttering, increase this.")
                                                   :face 'font-lock-keyword-face))
 
   (setq dashboard-navigator-buttons
-        `(;; line1
-          ((,(nerd-icons-codicon "nf-cod-octoface" :height 1.5 :v-adjust 0.0)
-            "Homepage"
-            "Browse homepage"
-            (lambda (&rest _) (browse-url "https://github.com/s-kybound/.emacs.d")) nil "" " |")
-           (,(nerd-icons-codicon "nf-cod-refresh" :height 1.5 :v-adjust 0.0)
-            "Update"
-            "Update Zmacs"
-            (lambda (&rest _) (auto-package-update-maybe)) warning "" " |")
-           (,(nerd-icons-faicon "nf-fa-flag" :height 1.5 :v-adjust 0.0) nil
-            "Report a BUG"
-            (lambda (&rest _) (browse-url "https://github.com/Likhon-baRoy/.emacs.d/issues/new")) error "" ""))
-          ;; line 2
-          ;; ((,(all-the-icons-octicon "mark-github" :height 1.1 :v-adjust 0.0)
-          ;;   "AlienFriend"
-          ;;   "Browse Alien Page"
-          ;;   (lambda (&rest _) (browse-url "https://github.com/b-coimbra/.emacs.d")) nil "" ""))
-          ;; Empty line
-          (("" "\n" "" nil nil "" ""))
-
-          ;; Keybindings
+        `(;; Keybindings
           ((,(nerd-icons-faicon "nf-fa-search" :height 0.9 :v-adjust -0.1)
             " Find file" nil
             (lambda (&rest _) (counsel-find-file)) nil "" "            C-x C-f"))
-          ((,(nerd-icons-octicon "nf-oct-file_directory" :height 1.0 :v-adjust -0.1)
-            " Open project" nil
-            (lambda (&rest _) (counsel-projectile-switch-project)) nil "" "         C-x p d"))
-          ((,(nerd-icons-octicon "nf-oct-three_bars" :height 1.1 :v-adjust -0.1)
-            " File explorer" nil
-            (lambda (&rest _) (counsel-projectile-switch-project)) nil "" "        C-x p D"))
           ((,(nerd-icons-codicon "nf-cod-settings" :height 0.9 :v-adjust -0.1)
             " Open settings" nil
             (lambda (&rest _) (open-config-file)) nil "" "        C-c e  "))))
@@ -966,10 +940,11 @@ If you experience stuttering, increase this.")
    dashboard-projects-backend 'project-el
    dashboard-projects-switch-function 'counsel-projectile-switch-project-by-name
    dashboard-items '((recents        . 5)
-                     (projects       . 2)
-                     (bookmarks      . 5)
-                     (agenda         . 3)
-                     (registers      . 5)))
+                     ;(projects       . 2)
+                     ;(bookmarks      . 5)
+                     ;(agenda         . 3)
+                     ;(registers      . 5)
+                     ))
   :custom-face
   (dashboard-heading ((t (:foreground nil :weight bold))))) ; "#f1fa8c"
 
