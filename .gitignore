@@ -15,6 +15,9 @@ tramp
 .custom.el
 /etc/custom.el
 
+# cache
+.cache
+
 # Org-mode
 .org-id-locations
 *_archive

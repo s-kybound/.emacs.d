@@ -30,12 +30,12 @@
 ;;
 ;;; Code:
 
-
 ;; BetterGC
 
-(defvar better-gc-cons-threshold (* 1024 1024 100) ; 100 MiB
+(defvar better-gc-cons-threshold (expt 2 30) ;2^20 is 1 MiB
   "If you experience freezing, decrease this.
 If you experience stuttering, increase this.")
+;; (run-with-idle-timer 2 t (lambda () (garbage-collect)))
 
 (add-hook 'emacs-startup-hook
           (lambda ()
@@ -52,7 +52,7 @@ If you experience stuttering, increase this.")
                               (lambda ()
                                 (unless (frame-focus-state)
                                   (garbage-collect))))
-              (add-hook 'after-focus-change-function 'garbage-collect))
+              (add-hovok 'after-focus-change-function 'garbage-collect))
             (defun gc-minibuffer-setup-hook ()
               (setq gc-cons-threshold (* better-gc-cons-threshold 2)))
 
@@ -129,6 +129,22 @@ If you experience stuttering, increase this.")
 ;; enforce org-mode on a default buffer
 (setq-default major-mode 'org-mode)
 
+;; define a function to auto-resize olivetti
+(interactive
+ (defalias 'reload-olivetti-mode
+   #'(lambda nil
+       (olivetti-mode toggle)
+       (olivetti-mode toggle))))
+
+;; enlarge the font a bit
+
+;; i don't like prettify-symbols
+(global-prettify-symbols-mode -1)
+(prettify-symbols-mode -1)
+;; make sure org-mode doesn't interpret subscript
+(setq org-use-sub-superscripts nil)
+(setq org-export-with-sup-superscripts nil)
+
 ;; enable synchronization between lsp and treemacs
 (lsp-treemacs-sync-mode 1)
 
@@ -141,10 +157,6 @@ If you experience stuttering, increase this.")
 (setq lsp-warn-no-matched-clients nil)
 
 ;; treemacs
-(defun transform-directory-name (dir)
-  "Given a directory of 'a', convert it to '> a'"
-  (concat "> " a))
-
 (use-package treemacs
   :ensure t
   :defer t
@@ -467,16 +479,6 @@ If you experience stuttering, increase this.")
   ("C-M-S-j" . drag-stuff-down)
   ("C-M-S-k" . drag-stuff-up))
 
-;;;; aggressive-indent
-(use-package aggressive-indent
-:defer t
-:doc "Intended Indentation"
-;; :hook ((prog-mode org-mode) . aggressive-indent-mode)
-:init (add-hook 'prog-mode-hook #'aggressive-indent-mode)
-:delight)
-;; (add-to-list 'aggressive-indent-excluded-modes 'snippet-mode)
-(add-hook 'snippet-mode-hook (lambda () (aggressive-indent-mode -1)))
-
 ;;;; auto-package-update
 (use-package auto-package-update
   :if (not (daemonp))
@@ -767,7 +769,7 @@ If you experience stuttering, increase this.")
         doom-themes-enable-italic t)
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
-  (load-theme 'doom-gruvbox t)
+  (load-theme 'doom-meltbus t)
   (if (display-graphic-p)
       (progn
         ;; Enable custom neotree theme (all-the-icons must be installed!)
@@ -821,8 +823,8 @@ If you experience stuttering, increase this.")
   (dashboard-set-file-icons t)
   (dashboard-set-heading-icons t)
   (dashboard-image-banner-max-height 250)
-  (dashboard-banner-logo-title "[Π Ο Σ Ε Ι Δ Ο Ν 🔱 Ε Δ Ι Τ Ο Ρ]") ; [Ποσειδον 🔱 εδιτορ]
-  (dashboard-startup-banner (concat user-emacs-directory "etc/banners/ue-colorful.png"))
+  (dashboard-banner-logo-title "[ E M A C S ]")
+  (dashboard-startup-banner (concat user-emacs-directory "etc/banners/blackhole.png"))
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-footer-icon (nerd-icons-codicon "nf-cod-calendar"
@@ -835,7 +837,7 @@ If you experience stuttering, increase this.")
           ((,(nerd-icons-codicon "nf-cod-octoface" :height 1.5 :v-adjust 0.0)
             "Homepage"
             "Browse homepage"
-            (lambda (&rest _) (browse-url "https://github.com/Likhon-baRoy/.emacs.d")) nil "" " |")
+            (lambda (&rest _) (browse-url "https://github.com/s-kybound/.emacs.d")) nil "" " |")
            (,(nerd-icons-codicon "nf-cod-refresh" :height 1.5 :v-adjust 0.0)
             "Update"
             "Update Zmacs"
@@ -900,7 +902,7 @@ If you experience stuttering, increase this.")
                                        "\\\\" "://"))
   ;; Enables ligature checks globally in all buffers. You can also do it
   ;; per mode with `ligature-mode'.
-  (global-ligature-mode t))
+  (global-ligature-mode nil))
 
 ;;;;; ligature-for-jetbrain
 (when (aorst/font-installed-p "JetBrainsMono")
@@ -1431,7 +1433,6 @@ If you experience stuttering, increase this.")
 (mouse-avoidance-mode 'exile)
 ;; Font lock of special Dash variables (it, acc, etc.). Comes default with Emacs.
 (global-dash-fontify-mode)
-(when window-system (global-prettify-symbols-mode t))
 
 ;;;; Modeline
 (size-indication-mode)
