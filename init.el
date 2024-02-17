@@ -864,7 +864,10 @@ If you experience stuttering, increase this.")
         doom-themes-enable-italic t)
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
+  ;; dark mode
   (load-theme 'doom-meltbus t)
+  ;; light mode
+  ;(load-theme 'doom-homage-white t)
   (if (display-graphic-p)
       (progn
         ;; Enable custom neotree theme (all-the-icons must be installed!)
