@@ -697,8 +697,9 @@ If you experience stuttering, increase this.")
   (ivy-posframe-height     10)
   (ivy-posframe-min-height 10)
   :config
-  (when (member "Iosevka Aile" (font-family-list))
-    (setq ivy-posframe-parameters '((font . "Iosevka Aile"))))
+  ;; supposed to be Aile but I like default Iosevka too much
+  (when (member "Iosevka" (font-family-list))
+    (setq ivy-posframe-parameters '((font . "Iosevka"))))
   (setq ivy-posframe-display-functions-alist
         '((complete-symbol . ivy-posframe-display-at-point)
           (swiper . ivy-display-function-fallback)
@@ -865,9 +866,9 @@ If you experience stuttering, increase this.")
   ;; Enable flashing mode-line on errors
   (doom-themes-visual-bell-config)
   ;; dark mode
-  (load-theme 'doom-meltbus t)
+  ;(load-theme 'doom-plain-dark t)
   ;; light mode
-  ;(load-theme 'doom-homage-white t)
+  (load-theme 'doom-plain t)
   (if (display-graphic-p)
       (progn
         ;; Enable custom neotree theme (all-the-icons must be installed!)
@@ -1611,11 +1612,12 @@ If you experience stuttering, increase this.")
       ((aorst/font-installed-p "Source Code Pro")
        (set-face-attribute 'default nil :font "Source Code Pro 14")))
 
+;; Testing if using monospace for all fonts would be cool or not.
 ;; For variable pitched fonts Iosevka Aile is used if available.
-(when (aorst/font-installed-p "Iosevka Aile")
-  (set-face-attribute 'variable-pitch nil :font (font-spec :family "Iosevka Aile" :size 14.0 :weight 'regular))
-  (set-face-attribute 'font-lock-comment-face nil :family "Iosevka Aile Oblique" :height 140) ; :foreground "#5B6268"
-  (set-face-attribute 'font-lock-function-name-face nil :family "Iosevka Aile" :height 140 :slant 'italic :weight 'regular) ; 'medium
+(when (aorst/font-installed-p "Iosevka")
+  (set-face-attribute 'variable-pitch nil :font (font-spec :family "Iosevka" :size 14.0 :weight 'regular))
+  (set-face-attribute 'font-lock-comment-face nil :family "Iosevka Oblique" :height 140) ; :foreground "#5B6268"
+  (set-face-attribute 'font-lock-function-name-face nil :family "Iosevka" :height 140 :slant 'italic :weight 'regular) ; 'medium
   ;; (set-face-attribute 'font-lock-variable-name-face nil :foreground "#dcaeea" :weight 'bold)
   (set-face-attribute 'font-lock-keyword-face nil :weight 'bold))
 
