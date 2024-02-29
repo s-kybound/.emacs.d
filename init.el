@@ -130,17 +130,28 @@ If you experience stuttering, increase this.")
 (setq-default major-mode 'org-mode)
 
 ;; define a function to auto-resize olivetti
+;; TODO: can't figure out how to expose it to the available commands yet
 (interactive
  (defalias 'reload-olivetti-mode
    #'(lambda nil
        (olivetti-mode toggle)
        (olivetti-mode toggle))))
 
-;; enlarge the font a bit
+;; turn on aggressive indentation across all buffers. on probation.
+(use-package aggressive-indent
+  :defer t
+  :doc "Intended Indentation"
+  ;; :hook ((prog-mode org-mode) . aggressive-indent-mode)
+  :init (add-hook 'prog-mode-hook #'aggressive-indent-mode)
+  :delight)
+;; (add-to-list 'aggressive-indent-excluded-modes 'snippet-mode)
+(add-hook 'snippet-mode-hook (lambda () (aggressive-indent-mode -1)))
 
-;; i don't like prettify-symbols
-(global-prettify-symbols-mode -1)
-(prettify-symbols-mode -1)
+;; add hooks for live viewing websites
+(add-hook 'js2-mode-hook 'skewer-mode)
+(add-hook 'css-mode-hook 'skewer-css-mode)
+(add-hook 'html-mode-hook 'skewer-html-mode)
+
 ;; make sure org-mode doesn't interpret subscript
 (setq org-use-sub-superscripts nil)
 (setq org-export-with-sup-superscripts nil)
@@ -153,6 +164,7 @@ If you experience stuttering, increase this.")
 
 ;; auto lsp-mode on every prog-mode
 (add-hook 'prog-mode-hook 'lsp-deferred)
+
 ;; Less chatty for unsupported modes
 (setq lsp-warn-no-matched-clients nil)
 
@@ -267,6 +279,12 @@ If you experience stuttering, increase this.")
   :after treemacs nerd-icons
   :config
   (treemacs-load-theme "nerd-icons"))
+
+;; theme to use for both terminal and gui
+(defvar kyriel-theme 'doom-plain)
+
+;; just for the terminal, load theme
+(load-theme kyriel-theme t)
 ;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;;
 
 ;; ─────────────────── Additional Packages and Configurations ──────────────────
@@ -868,7 +886,7 @@ If you experience stuttering, increase this.")
   ;; dark mode
   ;(load-theme 'doom-plain-dark t)
   ;; light mode
-  (load-theme 'doom-plain t)
+  (load-theme kyriel-theme t)
   (if (display-graphic-p)
       (progn
         ;; Enable custom neotree theme (all-the-icons must be installed!)
@@ -923,7 +941,7 @@ If you experience stuttering, increase this.")
   (dashboard-set-heading-icons t)
   (dashboard-image-banner-max-height 250)
   (dashboard-banner-logo-title "P U R I T Y")
-  (dashboard-startup-banner (concat user-emacs-directory "etc/banners/blackhole.png"))
+  (dashboard-startup-banner (concat user-emacs-directory "etc/banners/simplicity.svg"))
   :config
   (dashboard-setup-startup-hook)
   (setq dashboard-footer-icon (nerd-icons-codicon "nf-cod-calendar"
